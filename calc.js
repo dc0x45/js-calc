@@ -71,3 +71,16 @@ function clearOut(){
   document.getElementById('output').value = 0;
   evalArr = ['','','']; lastNum = true; lastSym = false; currNum = 0; nonLoc = []; numNums = 0;
 }
+function on(off){
+  if (off == 2){
+    alert('This calculator is already on! What are you doing?');
+  } else{
+    alert('I\'m surpirised you did not reload.');
+    document.getElementById('main').style.visibility = 'visible';
+  }
+}
+function off(){
+  alert('You know this is an online calculator right?');
+  document.getElementById('main').style.visibility = 'hidden';
+  setTimeout(on,5000)
+}
