@@ -58,7 +58,6 @@ input:active {
 
 #output {
   width: 265px;
-  max-width: 270px;
   font-size: 26px;
   text-align: right;
   background-color: #273c50;
@@ -67,18 +66,10 @@ input:active {
 }
 
 #output:hover {
-  width: 270px;
+  width: 265px;
   font-size: 26px;
   text-align: right;
-  background-color: #bcbd95;
+  background-color: #5d807f;
   box-shadow: 0 4px rgba(0,0,0,0.2);
 }
 
-#output:active {
-  top: 5px;
-  width: 270px;
-  font-size: 26px;
-  text-align: right;
-  background-color: #bcbd95;
-  box-shadow: 0 4px rgba(0,0,0,0.2);
-}
