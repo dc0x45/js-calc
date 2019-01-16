@@ -1,16 +1,23 @@
-var evalArr = ['','','']; var lastNum = true; var lastSym = false; var lastEql = false; currNum = 0; firstSym = false; var nonLoc = []; var numNums = 0;
+var evalArr = ['','','']; var lastNum = true; var lastSym = false; var lastEql = false; currNum = 0; firstSym = false; var nonLoc = []; var numNums = 0; var decimalExt = false; var afterDecArr = [];
 function parseNum(num){
   if (numNums < 9){
     if (lastEql){
       clearOut(); lastEql = false; currNum = 0;
     }
     if (lastNum){
+      if (decimalExt){
+        let beforeDec = Number(nonLoc.join('')).toLocaleString();
+        afterDecArr.push(num);
+        let afterDec = afterDecArr.join('');
+        document.getElementById('output').value = (beforeDec+'.'+afterDec); lastSym = true; numNums++;
+      } else{
+        nonLoc.push(num);
+        let outNum = Number(nonLoc.join('')).toLocaleString();
+        document.getElementById('output').value = (outNum); lastSym = true; numNums++;
+      }
+    } else{
       nonLoc.push(num);
-      let outNum = Number(nonLoc.join('')).toLocaleString(); 
-      document.getElementById('output').value = (outNum); lastSym = true; numNums++;
-    } else {
-      nonLoc.push(num);
-      let outNum = Number(nonLoc.join('')).toLocaleString(); 
+      let outNum = nonLoc.join('').toLocaleString();
       document.getElementById('output').value = (outNum); lastSym = true; lastNum = true; numNums++;
     }
   evalArr[currNum] = evalArr[currNum] + num;
@@ -20,10 +27,10 @@ function parseDec(){
   if (numNums < 9){
     if (lastSym){
       if (lastNum){
-        nonLoc.push('.');
+        decimalExt = true;
         document.getElementById('output').value = document.getElementById('output').value + '.'; 
         evalArr[currNum] = evalArr[currNum] + '.'; lastSym = true; numNums++;
-      } else {
+      } else{
         nonLoc.push('.');
         document.getElementById('output').value = document.getElementById('output').value + '.'; 
         evalArr[currNum] = evalArr[currNum] + '.'; lastSym = true; lastNum = true; numNums++;
@@ -70,7 +77,7 @@ function percent(){
 }
 function clearOut(){
   document.getElementById('output').value = 0;
-  evalArr = ['','','']; lastNum = true; lastSym = false; currNum = 0; nonLoc = []; numNums = 0;
+  evalArr = ['','','']; lastNum = true; lastSym = false; currNum = 0; nonLoc = []; numNums = 0; decimalExt = false;
 }
 function on(){
     alert('I\'m surpirised you did not reload.'); document.getElementById('main').style.visibility = 'visible';
