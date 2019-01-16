@@ -67,7 +67,7 @@ function clearOut(){
   evalArr = ['','','']; lastNum = true; lastSym = false; currNum = 0; nonLoc = []; numNums = 0;
 }
 function on(){
-    alert('I\'m surpirised you did not reload. Have fun!'); document.getElementById('main').style.visibility = 'visible';
+    alert('I\'m surpirised you did not reload this page.'); document.getElementById('main').style.visibility = 'visible';
 }
 function off(){
   alert('You know this is an online calculator right?');
