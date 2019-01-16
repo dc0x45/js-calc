@@ -42,20 +42,6 @@ input:hover {
   box-shadow: 0 4px #b0d2cf;
 }
 
-input:active {
-  top: 4px;
-  border: 0 solid #000;
-  color: #495069;
-  background-color: #fff;
-  border-radius: 4px;
-  width: 60px;
-  height: 50px;
-  float: left;
-  margin: 5px;
-  font-size: 20px;
-  box-shadow: none;
-}
-
 #output {
   width: 265px;
   max-width: 270px;
@@ -64,4 +50,5 @@ input:active {
   background-color: #273c50;
   color: white;
   float: left;
+  box-shadow: none;
 }
