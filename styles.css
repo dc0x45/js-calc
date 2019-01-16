@@ -29,6 +29,19 @@ input {
   margin-bottom: 15px;
 }
 
+input:hover {
+  border: 0 solid #000;
+  color: #495069;
+  background-color: #fff;
+  border-radius: 4px;
+  width: 60px;
+  height: 50px;
+  float: left;
+  margin: 5px;
+  font-size: 20px;
+  box-shadow: 0 4px #b0d2cf;
+}
+
 input:active {
   top: 4px;
   border: 0 solid #000;
@@ -51,21 +64,4 @@ input:active {
   background-color: #273c50;
   color: white;
   float: left;
-}
-
-#output:hover {
-  width: 270px;
-  font-size: 26px;
-  text-align: right;
-  background-color: #bcbd95;
-  box-shadow: 0 4px rgba(0,0,0,0.2);
-}
-
-#output:active {
-  top: 5px;
-  width: 270px;
-  font-size: 26px;
-  text-align: right;
-  background-color: #bcbd95;
-  box-shadow: 0 4px rgba(0,0,0,0.2);
 }
