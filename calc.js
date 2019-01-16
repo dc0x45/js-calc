@@ -1,27 +1,33 @@
 var evalArr = ['','','']; var lastNum = true; var lastSym = false; var lastEql = false; currNum = 0; firstSym = false; var nonLoc = []; var numNums = 0;
 function parseNum(num){
-  if (numNums < 9) {
+  if (numNums < 9){
     if (lastEql){
       clearOut(); lastEql = false; currNum = 0;
     }
     if (lastNum){
-      let outNum = Number(nonLoc.join('')).toLocaleString(); nonLoc.push(num);
+      nonLoc.push(num);
+      let outNum = Number(nonLoc.join('')).toLocaleString(); 
       document.getElementById('output').value = (outNum); lastSym = true; numNums++;
     } else {
-      let outNum = Number(nonLoc.join('')).toLocaleString(); nonLoc.push(num);
+      nonLoc.push(num);
+      let outNum = Number(nonLoc.join('')).toLocaleString(); 
       document.getElementById('output').value = (outNum); lastSym = true; lastNum = true; numNums++;
     }
   evalArr[currNum] = evalArr[currNum] + num;
   }
 }
 function parseDec(){
-  if (lastSym){
-    if (lastNum){
-      document.getElementById('output').value = document.getElementById('output').value + '.'; nonLoc.push('.');
-      evalArr[currNum] = evalArr[currNum] + '.'; lastSym = true; numNums++;
-    } else {
-      document.getElementById('output').value = document.getElementById('output').value + '.'; nonLoc.push('.');
-      evalArr[currNum] = evalArr[currNum] + '.'; lastSym = true; lastNum = true; numNums++;
+  if (numNums < 9){
+    if (lastSym){
+      if (lastNum){
+        nonLoc.push('.');
+        document.getElementById('output').value = document.getElementById('output').value + '.'; 
+        evalArr[currNum] = evalArr[currNum] + '.'; lastSym = true; numNums++;
+      } else {
+        nonLoc.push('.');
+        document.getElementById('output').value = document.getElementById('output').value + '.'; 
+        evalArr[currNum] = evalArr[currNum] + '.'; lastSym = true; lastNum = true; numNums++;
+      }
     }
   }
 }
@@ -67,7 +73,7 @@ function clearOut(){
   evalArr = ['','','']; lastNum = true; lastSym = false; currNum = 0; nonLoc = []; numNums = 0;
 }
 function on(){
-    alert('I\'m surpirised you did not reload this page.'); document.getElementById('main').style.visibility = 'visible';
+    alert('I\'m surpirised you did not reload.'); document.getElementById('main').style.visibility = 'visible';
 }
 function off(){
   alert('You know this is an online calculator right?');
