@@ -5,12 +5,10 @@ function parseNum(num){
       clearOut(); lastEql = false; currNum = 0;
     }
     if (lastNum){
-      nonLoc.push(num);
-      let outNum = Number(nonLoc.join('')).toLocaleString();
+      let outNum = Number(nonLoc.join('')).toLocaleString(); nonLoc.push(num);
       document.getElementById('output').value = (outNum); lastSym = true; numNums++;
     } else {
-      nonLoc.push(num);
-      let outNum = Number(nonLoc.join('')).toLocaleString();
+      let outNum = Number(nonLoc.join('')).toLocaleString(); nonLoc.push(num);
       document.getElementById('output').value = (outNum); lastSym = true; lastNum = true; numNums++;
     }
   evalArr[currNum] = evalArr[currNum] + num;
@@ -19,12 +17,10 @@ function parseNum(num){
 function parseDec(){
   if (lastSym){
     if (lastNum){
-      nonLoc.push('.');
-      document.getElementById('output').value = document.getElementById('output').value + '.';
+      document.getElementById('output').value = document.getElementById('output').value + '.'; nonLoc.push('.');
       evalArr[currNum] = evalArr[currNum] + '.'; lastSym = true; numNums++;
     } else {
-      nonLoc.push('.');
-      document.getElementById('output').value = document.getElementById('output').value + '.';
+      document.getElementById('output').value = document.getElementById('output').value + '.'; nonLoc.push('.');
       evalArr[currNum] = evalArr[currNum] + '.'; lastSym = true; lastNum = true; numNums++;
     }
   }
@@ -43,7 +39,9 @@ function parseSym(sym){
 }
 function equals(){
   if (eval(evalArr[0]) == 0 || eval(evalArr[2]) == 0){
-    alert('Do not divide by zero!'); clearOut();
+    if (evalArr[1] == '/'){
+      alert('Do not divide by zero!'); clearOut();
+    }
   }
   let evalStr = eval(evalArr.join(''));
   if (evalStr > 999999999){
@@ -68,12 +66,8 @@ function clearOut(){
   document.getElementById('output').value = 0;
   evalArr = ['','','']; lastNum = true; lastSym = false; currNum = 0; nonLoc = []; numNums = 0;
 }
-function on(off){
-  if (off == 2){
-    alert('This calculator is already on! What are you doing?');
-  } else{
-    alert('I\'m surpirised you did not reload.'); document.getElementById('main').style.visibility = 'visible';
-  }
+function on(){
+    alert('I\'m surpirised you did not reload. Have fun!'); document.getElementById('main').style.visibility = 'visible';
 }
 function off(){
   alert('You know this is an online calculator right?');
