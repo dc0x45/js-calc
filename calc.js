@@ -1,90 +1,144 @@
-var evalArr = ['','','']; var lastNum = true; var lastSym = false; var lastEql = false; currNum = 0; firstSym = true; var nonLoc = []; var numNums = 0; var decimalExt = false; var afterDecArr = [];
-function parseNum(num){
-  if (numNums < 9){
-    if (lastEql){
-      clearOut(); lastEql = false; currNum = 0;
+var numArr = [];
+var symArr = [];
+var numArrPos = 0;
+var symArrPos = 0;
+var numOfNums = 0;
+var numOrSym = true; // Number is true, symbol is false
+var locNums = [];
+var enableDec = true;
+var numAfterEql = false;
+function numIO(num){
+    if (numAfterEql){
+        clearOut();
+        numAfterEql = false;
     }
-    if (lastNum){
-      if (decimalExt){
-        let beforeDec = Number(nonLoc.join('')).toLocaleString();
-        afterDecArr.push(num);
-        let afterDec = afterDecArr.join('');
-        document.getElementById('output').value = (beforeDec+'.'+afterDec); lastSym = true; numNums++;
-      } else{
-        nonLoc.push(num);
-        let outNum = Number(nonLoc.join('')).toLocaleString();
-        document.getElementById('output').value = (outNum); lastSym = true; numNums++;
-      }
-    } else{
-      nonLoc.push(num);
-      let outNum = nonLoc.join('').toLocaleString();
-      document.getElementById('output').value = (outNum); lastSym = true; lastNum = true; numNums++;
-    }
-  evalArr[currNum] = evalArr[currNum] + num;
-  }
-}
-function parseDec(){
-  if (numNums < 9){
-    if (decimalExt == false){
-      if (lastSym){
-        if (lastNum){
-          decimalExt = true;
-          document.getElementById('output').value = document.getElementById('output').value + '.'; 
-          evalArr[currNum] = evalArr[currNum] + '.'; lastSym = false; numNums++;
-        } else{
-          decimalExt = true;
-          document.getElementById('output').value = document.getElementById('output').value + '.'; 
-          evalArr[currNum] = evalArr[currNum] + '.'; lastSym = false; lastNum = true; numNums++;
+    if (numOfNums < 9){
+        symArrPos++;
+        if (numOrSym){
+            locNums.push(num);
+            numOfNums++; 
         }
-      }
+        let intArrNum = locNums.join('');
+        numArr.push(''); numArr.push('');
+        numArr[numArrPos] = (intArrNum.toString());
+        display();     
     }
-  }
 }
-function parseSym(sym){
-  if (lastSym){
-    if (firstSym){
-      document.getElementById('output').value = (sym); nonLoc = []; numNums = 0;
-      lastNum = false; lastEql = false; evalArr[1] = sym; currNum++;
-    } else if(firstSym === false){
-      equals();
-      document.getElementById('output').value = (sym); nonLoc = []; numNums = 0;
-      lastNum = false; lastEql = false; evalArr[1] = sym; currNum++;
+
+function symIO(sym) {
+    if (numArr[0]){
+        symArr[symArrPos] = (sym.toString());
+        symArr.push('');
+        numArrPos++;
+        locNums = []
+        numOfNums = 0;
+        enableDec = true;
+        display();
     }
-  }
 }
-function equals(){
-  if (eval(evalArr[0]) == 0 || eval(evalArr[2]) == 0){
-    if (evalArr[1] == '/'){
-      alert('Do not divide by zero!'); clearOut();
+function decIO(){
+    if (enableDec){
+        locNums.push('.');
+        let intArrNum = locNums.join('');
+        numArr[numArrPos] = (intArrNum.toString());
+        enableDec = false;
+        display();
     }
-  }
-  let evalStr = eval(evalArr.join(''));
-  if (evalStr > 999999999){
-    evalStr = evalStr.toExponential(9);
-  }
-  document.getElementById('output').value = evalStr.toLocaleString();
-  evalArr = ['','','']; evalArr[0] = evalArr[0] + eval(evalStr); currNum = 1; evalStr = ''; lastNum = false; lastEql = true; firstSym = false;
-}
-function negate(){
-  if (lastSym){
-  document.getElementById('output').value = (document.getElementById('output').value * -1).toLocaleString();
-  evalArr[currNum] = (evalArr[currNum] * -1);
-  }
 }
 function percent(){
-  if (lastSym){
-    document.getElementById('output').value = (document.getElementById('output').value / 100);
-    evalArr[currNum] = (evalArr[currNum] / 100);
-  }
+    if (numArr[0]){
+        numArr[numArrPos] = (numArr[numArrPos] / 100).toString();
+        display();
+    }
+}
+function negate(){
+    if (numArr[0]){
+        numArr[numArrPos] = (numArr[numArrPos] * (-1)).toString();
+        display();
+    }
+}
+function equalizer(){
+    let internalArr = [];
+    let evenNum = 0;
+    let oddNum = 1;
+    let divByZero = false;
+    for(nums in numArr){
+        if (numArr[nums] != '' && numArr[nums] != null){
+            internalArr[evenNum] = numArr[nums].toString();
+            evenNum += 2;
+        }
+    }
+    for(syms in symArr){
+        if (symArr[syms] != '' && symArr[syms] != null){
+            if (symArr[syms] == '/' && numArr.includes('0')){
+                divByZero = true;
+            } else{
+                internalArr[oddNum] = symArr[syms].toString();
+                oddNum += 2;
+            }
+        }
+    }
+    let mainString = internalArr.join('')
+    let intOut  = eval(mainString);
+    if (divByZero){
+        divZeroStr = "Do not divide by zero."
+        numArr.push(divZeroStr.toString());
+    } else{
+        numArr.push(intOut.toString());
+        clearOut();
+        if (intOut > 999999999){
+            display(true, true);
+        } else{
+            display(false, true);
+        }
+    }
+    numArrPos = 1;
+    numAfterEql = true;
 }
 function clearOut(){
-  document.getElementById('output').value = 0;
-  evalArr = ['','','']; lastNum = true; lastSym = false; currNum = 0; nonLoc = []; numNums = 0; decimalExt = false; afterDecArr = [];
+    numArr = [];
+    symArr = [];
+    locNums = [];
+    symArrPos = 0;
+    numArrPos = 0;
+    numOfNums = 0;
+    numOrSym = true;
+    numAfterEql = false;
+    document.getElementById('output').value = 0
+}
+function display(big, eql){
+    let displayArr = [];
+    let evenNum = 0;
+    let oddNum = 1;
+    for(nums in numArr){
+        if (numArr[nums] != ''){
+            if (big){
+                displayArr[evenNum] = Number(numArr[nums]).toExponential(9);
+                console.log(displayArr);
+                evenNum = 0;
+                oddNum = 1;
+            } else{
+                let decSplit = numArr[nums].split('.');
+                decSplit[0] = Number(decSplit[0]).toLocaleString();
+                displayArr[evenNum] = decSplit.join('.');
+                evenNum += 2;
+            }
+            
+        } 
+    }
+    for(syms in symArr){
+        if (symArr[syms] != '' && symArr[syms] != null){
+            displayArr[oddNum] = symArr[syms].toString();
+            oddNum += 2;
+        }
+    }
+    let outStr = displayArr.join(' ')
+    document.getElementById('output').value = outStr
 }
 function on(){
     alert('I\'m surpirised you did not reload.'); document.getElementById('main').style.visibility = 'visible';
 }
 function off(){
   alert('You know this is an online calculator right?');
-  document.getElementById('main').style.visibility = 'hidden'; setTimeout(on,5000);
+  document.getElementById('main').style.visibility = 'hidden'; setTimeout(on,10000);
 }
