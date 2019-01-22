@@ -7,33 +7,40 @@ var numOrSym = true; // Number is true, symbol is false
 var locNums = [];
 var enableDec = true;
 var numAfterEql = false;
+var totalChars = 0;
 function numIO(num){
     if (numAfterEql){
         clearOut();
         numAfterEql = false;
     }
-    if (numOfNums < 9){
-        symArrPos++;
-        if (numOrSym){
-            locNums.push(num);
-            numOfNums++; 
-        }
-        let intArrNum = locNums.join('');
-        numArr.push(''); numArr.push('');
-        numArr[numArrPos] = (intArrNum.toString());
+    if (totalChars < 27){
+        if (numOfNums < 9){
+            symArrPos++;
+            if (numOrSym){
+                locNums.push(num);
+                numOfNums++; 
+                totalChars++;
+            }
+            let intArrNum = locNums.join('');
+            numArr.push(''); numArr.push('');
+            numArr[numArrPos] = (intArrNum.toString());
         display();     
+        }
     }
 }
 
 function symIO(sym) {
-    if (numArr[0]){
-        symArr[symArrPos] = (sym.toString());
-        symArr.push('');
-        numArrPos++;
-        locNums = []
-        numOfNums = 0;
-        enableDec = true;
-        display();
+    if (totalChars < 27){
+        if (numArr[0]){
+            symArr[symArrPos] = (sym.toString());
+            symArr.push('');
+            numArrPos++;
+            locNums = []
+            numOfNums = 0;
+            totalChars++;
+            enableDec = true;
+            display();
+        }
     }
 }
 function decIO(){
@@ -72,28 +79,25 @@ function equalizer(){
         if (symArr[syms] != '' && symArr[syms] != null){
             if (symArr[syms] == '/' && numArr.includes('0')){
                 divByZero = true;
-            } else{
-                internalArr[oddNum] = symArr[syms].toString();
-                oddNum += 2;
             }
+            internalArr[oddNum] = symArr[syms].toString();
+            oddNum += 2;
         }
     }
     let mainString = internalArr.join('')
     let intOut  = eval(mainString);
-    if (divByZero){
-        divZeroStr = "Do not divide by zero."
-        numArr.push(divZeroStr.toString());
-    } else{
-        numArr.push(intOut.toString());
-        clearOut();
-        if (intOut > 999999999){
-            display(true, true);
-        } else{
-            display(false, true);
-        }
-    }
+    console.log(typeof(intOut))
     numArrPos = 1;
     numAfterEql = true;
+    clearOut();
+    numArr.push(intOut.toString());
+    if (intOut > 999999999){
+        display(true, true, intOut);
+    } else if (divByZero){
+
+    } else{
+        display(false, true, 0);
+    }
 }
 function clearOut(){
     numArr = [];
@@ -106,24 +110,35 @@ function clearOut(){
     numAfterEql = false;
     document.getElementById('output').value = 0
 }
-function display(big, eql){
+function display(big, eql, numb){
     let displayArr = [];
     let evenNum = 0;
     let oddNum = 1;
+    let notZero = true;
     for(nums in numArr){
         if (numArr[nums] != ''){
-            if (big){
-                displayArr[evenNum] = Number(numArr[nums]).toExponential(9);
-                console.log(displayArr);
+            if (big && eql){
+                if (numb == Infinity){
+                    document.getElementById('output').value = 'Error';
+                    notZero = false;
+                    break;
+                } else{
+                    displayArr[evenNum] = Number(numArr[nums]).toExponential(9);
                 evenNum = 0;
                 oddNum = 1;
-            } else{
+                }
+            } else if (eql){
                 let decSplit = numArr[nums].split('.');
                 decSplit[0] = Number(decSplit[0]).toLocaleString();
                 displayArr[evenNum] = decSplit.join('.');
                 evenNum += 2;
             }
-            
+            else{
+                let decSplit = numArr[nums].split('.');
+                decSplit[0] = Number(decSplit[0]).toLocaleString();
+                displayArr[evenNum] = decSplit.join('.');
+                evenNum += 2;
+            }
         } 
     }
     for(syms in symArr){
@@ -133,7 +148,9 @@ function display(big, eql){
         }
     }
     let outStr = displayArr.join(' ')
-    document.getElementById('output').value = outStr
+    if (notZero){
+        document.getElementById('output').value = outStr
+    }
 }
 function on(){
     alert('I\'m surpirised you did not reload.'); document.getElementById('main').style.visibility = 'visible';
