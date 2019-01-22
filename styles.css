@@ -5,8 +5,8 @@ body {
 table {
   margin: auto;
   background-color: #080b12;
-  width: 300px;
-  height: 325px;
+  width: 570px;
+  height: 700px;
   text-align: center;
   border-radius: 4px;
   padding-right: 10px;
@@ -21,34 +21,39 @@ input {
   color: #fff;
   background-color: #5d807f;
   border-radius: 4px;
-  width: 60px;
-  height: 50px;
-  float: left;
+  width: 120px;
+  height: 100px;
+  float: center;
   margin: 5px;
-  font-size: 20px;
+  font-size: 30px;
   margin-bottom: 15px;
 }
 
 input:hover {
-  border: 0 solid #000;
-  color: #495069;
+  outline: 0;
+  position: relative;
+  left: 5px;
+  top: 5px;
+  border: 0;
+  color: #000;
   background-color: #fff;
-  border-radius: 4px;
-  width: 60px;
-  height: 50px;
-  float: left;
+  border-radius: 8px;
+  width: 120px;
+  height: 100px;
+  float: center;
   margin: 5px;
-  font-size: 20px;
-  box-shadow: 0 4px #b0d2cf;
+  font-size: 30px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px #b0d2cf;
 }
 
 #output {
-  width: 265px;
-  max-width: 270px;
+  width: 530px;
+  max-width: 540px;
   font-size: 26px;
   text-align: right;
   background-color: #273c50;
   color: white;
-  float: left;
+  float: center;
   box-shadow: none;
 }
