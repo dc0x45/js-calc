@@ -12,6 +12,7 @@ function numIO(num){
     if (numAfterEql){
         clearOut();
         numAfterEql = false;
+        numArrPos = 1;
     }
     if (totalChars < 27){
         if (numOfNums < 9){
@@ -87,7 +88,7 @@ function equalizer(){
     let mainString = internalArr.join('')
     let intOut  = eval(mainString);
     console.log(typeof(intOut))
-    numArrPos = 1;
+    numArrPos = 0;
     numAfterEql = true;
     clearOut();
     numArr.push(intOut.toString());
