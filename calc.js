@@ -85,7 +85,7 @@ function equalizer(){
             oddNum += 2;
         }
     }
-    let mainString = internalArr.join('')
+    let mainString = internalArr.join(' ')
     let intOut  = eval(mainString);
     console.log(typeof(intOut))
     numArrPos = 0;
