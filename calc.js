@@ -93,11 +93,11 @@ function equalizer(){
     clearOut();
     numArr.push(intOut.toString());
     if (intOut > 999999999){
-        display(true, true, intOut);
-    } else if (divByZero){
-
+        display(true, true, intOut, false);
+    } else if (intOut < 1){
+        display(false, true, intOut, true);
     } else{
-        display(false, true, 0);
+        display(false, true, 0, false);
     }
 }
 function clearOut(){
@@ -111,7 +111,7 @@ function clearOut(){
     numAfterEql = false;
     document.getElementById('output').value = 0
 }
-function display(big, eql, numb){
+function display(big, eql, numb, smol){
     let displayArr = [];
     let evenNum = 0;
     let oddNum = 1;
@@ -132,6 +132,9 @@ function display(big, eql, numb){
                 let decSplit = numArr[nums].split('.');
                 decSplit[0] = Number(decSplit[0]).toLocaleString();
                 displayArr[evenNum] = decSplit.join('.');
+                evenNum += 2;
+            } else if (smol){
+                displayArr[evenNum] = numArr[nums].toExponential(9)
                 evenNum += 2;
             }
             else{
