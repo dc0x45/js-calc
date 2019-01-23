@@ -120,7 +120,7 @@ function display(big, eql, numb, smol){
         if (numArr[nums] != ''){
             if (big && eql){
                 if (numb == Infinity){
-                    document.getElementById('output').value = 'Error';
+                    document.getElementById('output').value = 'There is no spoon...';
                     notZero = false;
                     break;
                 } else{
